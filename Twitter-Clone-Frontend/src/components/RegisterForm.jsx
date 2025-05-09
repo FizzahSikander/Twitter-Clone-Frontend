@@ -1,30 +1,49 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { registerUser } from '../services/register';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 export default function RegisterForm() {
-  const [name, setName] = useState('');
+  const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email) return setError('Missing fields');
+    if (!user || !email) return setError('Missing fields');
     if (password !== confirm) return setError('Passwords no match');
     setError('');
-    console.log(name, email, password, confirm);
-  }
+    setMessage('');
+
+    const params = { user, email, password };
+    const res = await registerUser(params);
+    res.message ? setMessage(res.message) : setError(res.error);
+  };
 
   return (
     <>
       <form className="form" onSubmit={handleSubmit}>
-        <span style={{ color: 'red', fontWeight: 'bold' }}>{error}</span>
+        {message && (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="success" variant="filled" color="info">
+              {message}
+            </Alert>
+          </Stack>
+        )}
 
+        {error && (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="error">{error}</Alert>
+          </Stack>
+        )}
         <div className="input-container">
-          <input type="text" className="input" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} maxLength={30} />
-          <span className="char-count">{name.length} / 30</span>
+          <input type="text" className="input" placeholder="Username" value={user} onChange={(e) => setUser(e.target.value)} maxLength={30} />
+          <span className="char-count">{user.length} / 30</span>
         </div>
 
         <input type="email" className="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />

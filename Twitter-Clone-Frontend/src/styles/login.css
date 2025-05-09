@@ -137,3 +137,14 @@
   color: gray;
   pointer-events: none;
 }
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
