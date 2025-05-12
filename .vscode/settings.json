@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": false,
+    "Twitter-Clone-Frontend/vite.config.js": true,
+    "Twitter-Clone-Frontend/README.md": true,
+    "Twitter-Clone-Frontend/package-lock.json": true,
+    "Twitter-Clone-Frontend/eslint.config.js": true,
+    "Twitter-Clone-Frontend/.gitignore": true,
+    "Twitter-Clone-Frontend/index.html": true,
+    "Twitter-Clone-Frontend/node_modules": true,
+    ".vscode": true
+  },
+  "explorerExclude.backup": {}
+}
