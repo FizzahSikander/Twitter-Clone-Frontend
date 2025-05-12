@@ -5,65 +5,146 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
 export default function RegisterForm() {
-  const [user, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirm: '',
+    nickname: '',
+    about: '',
+    occupation: '',
+    hometown: '',
+    homepage: '',
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user || !email) return setError('Missing fields');
-    if (password !== confirm) return setError('Passwords no match');
+    console.log(form);
+
+    if (!form.name || !form.email || !form.nickname) return setError('Missing fields');
+    if (form.password !== form.confirm) return setError('Passwords no match');
     setError('');
     setMessage('');
 
-    const params = { user, email, password };
-    const res = await registerUser(params);
+    const res = await registerUser(form);
     res.message ? setMessage(res.message) : setError(res.error);
   };
 
   return (
     <>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className='form' onSubmit={handleSubmit}>
         {message && (
-          <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert severity="success" variant="filled" color="info">
+          <Stack
+            sx={{
+              width: '100%',
+            }}
+            spacing={2}
+          >
+            <Alert severity='success' variant='filled' color='info'>
               {message}
             </Alert>
           </Stack>
         )}
-
         {error && (
-          <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert severity="error">{error}</Alert>
+          <Stack
+            sx={{
+              width: '100%',
+            }}
+            spacing={2}
+          >
+            <Alert severity='error'>{error}</Alert>
           </Stack>
         )}
-        <div className="input-container">
-          <input type="text" className="input" placeholder="Username" value={user} onChange={(e) => setUser(e.target.value)} maxLength={30} />
-          <span className="char-count">{user.length} / 30</span>
+        <div className='input-container'>
+          <input
+            type='text'
+            className='input'
+            placeholder='Name'
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            maxLength={30}
+          />
+          <span className='char-count'>{form.name.length} / 30</span>
         </div>
+        <input
+          type='email'
+          className='input'
+          placeholder='Email'
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+        <input
+          type='text'
+          className='input'
+          placeholder='Nickname'
+          value={form.nickname}
+          onChange={(e) => setForm({ ...form, nickname: e.target.value })}
+          maxLength={30}
+        />
 
-        <input type="email" className="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-
-        <div className="input-container">
-          <input type={showPassword ? 'text' : 'password'} className="input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <span className="toggle" onClick={() => setShowPassword(!showPassword)}>
+        <div className='input-container'>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            className='input'
+            placeholder='Password'
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+          <span className='toggle' onClick={() => setShowPassword(!showPassword)}>
             👁
           </span>
         </div>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          className='input'
+          placeholder='Confirm password'
+          value={form.confirm}
+          onChange={(e) => setForm({ ...form, confirm: e.target.value })}
+          maxLength={30}
+        />
 
-        <input type={showPassword ? 'text' : 'password'} className="input" placeholder="Confirm password" value={confirm} onChange={(e) => setConfirm(e.target.value)} />
-
-        <button type="submit" className="next btn">
+        <input
+          type='text'
+          className='input'
+          placeholder='About   (optional)'
+          value={form.about}
+          onChange={(e) => setForm({ ...form, about: e.target.value })}
+          maxLength={30}
+        />
+        <input
+          type='text'
+          className='input'
+          placeholder='Occupation   (optional)'
+          value={form.occupation}
+          onChange={(e) => setForm({ ...form, occupation: e.target.value })}
+          maxLength={30}
+        />
+        <input
+          type='text'
+          className='input'
+          placeholder='Hometown   (optional)'
+          value={form.hometown}
+          onChange={(e) => setForm({ ...form, hometown: e.target.value })}
+          maxLength={30}
+        />
+        <input
+          type='text'
+          className='input'
+          placeholder='Homepage   (optional)'
+          value={form.homepage}
+          onChange={(e) => setForm({ ...form, homepage: e.target.value })}
+          maxLength={30}
+        />
+        <button type='submit' className='next btn'>
           Sign up
         </button>
       </form>
 
-      <p className="signup">
-        Already have an account? <Link to="/login">Sign in</Link>
+      <p className='signup'>
+        Already have an account? <Link to='/login'>Sign in</Link>
       </p>
     </>
   );
