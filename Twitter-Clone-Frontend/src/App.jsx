@@ -1,22 +1,18 @@
-import { useState } from "react";
-import { Login } from "./pages/Login";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Register } from "./pages/Register";
-import { Profile } from "./pages/Profile";
-function App() {
-  // const [count, setCount] = useState(0);
+import { useEffect, useState } from 'react';
+import { Login } from './pages/Login';
+import { Routes, Route } from 'react-router-dom';
+import { Register } from './pages/Register';
+import { Profile } from './pages/Profile';
+import { AuthRedirect } from './utils/AuthRedirect';
 
+function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-
-        {/* <Route path="/feed" element={<Feed />} />
-      <Route path="/profile" element={<Profile />} /> */}
+        <Route path='/' element={<AuthRedirect />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/profile/:username' element={<Profile />} />
       </Routes>
     </>
   );
