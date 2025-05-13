@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/register';
+import { useUser } from './UserContext'; 
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
@@ -20,44 +21,49 @@ export default function RegisterForm() {
     homepage: '',
   });
 
+  const navigate = useNavigate();
+  const { setUser } = useUser(); // Use context to store user data
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
 
-    if (!form.name || !form.email || !form.nickname) return setError('Missing fields');
-    if (form.password !== form.confirm) return setError('Passwords no match');
+    if (!form.name || !form.email || !form.nickname) {
+      return setError('Missing required fields');
+    }
+
+    if (form.password !== form.confirm) {
+      return setError('Passwords do not match');
+    }
+
     setError('');
     setMessage('');
 
     const res = await registerUser(form);
-    res.message ? setMessage(res.message) : setError(res.error);
+
+    if (res.message) {
+      setUser(form); // Save user data in context
+      navigate('/profile'); // Redirect to profile page
+    } else {
+      setError(res.error || 'Registration failed');
+    }
   };
 
   return (
     <>
       <form className='form' onSubmit={handleSubmit}>
         {message && (
-          <Stack
-            sx={{
-              width: '100%',
-            }}
-            spacing={2}
-          >
+          <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='success' variant='filled' color='info'>
               {message}
             </Alert>
           </Stack>
         )}
         {error && (
-          <Stack
-            sx={{
-              width: '100%',
-            }}
-            spacing={2}
-          >
+          <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='error'>{error}</Alert>
           </Stack>
         )}
+
         <div className='input-container'>
           <input
             type='text'
@@ -69,6 +75,7 @@ export default function RegisterForm() {
           />
           <span className='char-count'>{form.name.length} / 30</span>
         </div>
+
         <input
           type='email'
           className='input'
@@ -76,6 +83,7 @@ export default function RegisterForm() {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
+
         <input
           type='text'
           className='input'
@@ -97,6 +105,7 @@ export default function RegisterForm() {
             👁
           </span>
         </div>
+
         <input
           type={showPassword ? 'text' : 'password'}
           className='input'
@@ -109,35 +118,39 @@ export default function RegisterForm() {
         <input
           type='text'
           className='input'
-          placeholder='About   (optional)'
+          placeholder='About (optional)'
           value={form.about}
           onChange={(e) => setForm({ ...form, about: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
-          placeholder='Occupation   (optional)'
+          placeholder='Occupation (optional)'
           value={form.occupation}
           onChange={(e) => setForm({ ...form, occupation: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
-          placeholder='Hometown   (optional)'
+          placeholder='Hometown (optional)'
           value={form.hometown}
           onChange={(e) => setForm({ ...form, hometown: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
-          placeholder='Homepage   (optional)'
+          placeholder='Website (optional)'
           value={form.homepage}
           onChange={(e) => setForm({ ...form, homepage: e.target.value })}
           maxLength={30}
         />
+
         <button type='submit' className='next btn'>
           Sign up
         </button>
