@@ -3,7 +3,7 @@ export const registerUser = async (params) => {
         const response = await fetch(`http://localhost:3000/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
+            gicredentials: 'include',
             body: JSON.stringify(params),
         });
         const data = await response.json();
