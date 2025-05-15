@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Register } from "./pages/Register";
 import { Profile } from "./pages/Profile";
 import { AuthRedirect } from "./utils/AuthRedirect";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
         <Route path="/" element={<AuthRedirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </>
   );
