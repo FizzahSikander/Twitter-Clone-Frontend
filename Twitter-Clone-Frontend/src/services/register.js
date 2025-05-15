@@ -1,15 +1,23 @@
 export const registerUser = async (params) => {
   try {
+    const formData = new FormData();
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (key !== 'image' || value) {
+        formData.append(key, value);
+      }
+    });
+
     const response = await fetch(`http://localhost:3000/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify(params),
+      body: formData,
     });
+
     const data = await response.json();
     console.log(data);
+
     if (data.error) {
-      console.error("Error registering user:", data.error);
       return { error: data.error };
     }
     return { message: data.message };
@@ -38,3 +46,26 @@ export const loginUser = async (params) => {
     return err;
   }
 };
+
+
+
+// export const postTweet = async (tweet) => {
+//   try {
+//     const response = await fetch(`http://localhost:3000/tweet`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       credentials: "include",
+//       body: JSON.stringify({ tweet }),
+//     });
+
+//     const data = await response.json();
+//     console.log(data);
+//     if (data.error) {
+//       console.error("Error registering user:", data.error);
+//       return { error: data.error };
+//     }
+//     return { message: data.message };
+//   } catch (err) {
+//     return err;
+//   }
+// };
