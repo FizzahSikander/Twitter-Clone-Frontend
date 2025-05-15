@@ -18,6 +18,7 @@ export default function RegisterForm() {
     occupation: '',
     hometown: '',
     homepage: '',
+    image: '',
   });
 
   const handleSubmit = async (e) => {
@@ -36,6 +37,27 @@ export default function RegisterForm() {
   return (
     <>
       <form className='form' onSubmit={handleSubmit}>
+        <input
+          type='file'
+          accept='image/*'
+          id='imageUpload'
+          hidden
+          onChange={(e) => setForm({ ...form, image: e.target.files[0] })}
+        />
+        {!message && (
+          <div className='img-container'>
+            <label htmlFor='imageUpload' className='upload-pic'>
+              {form.image ? 'Change Profile Picture:' : 'Upload Profile Picture'}
+            </label>
+
+            {form.image instanceof File && (
+              <div className='preview'>
+                <img src={URL.createObjectURL(form.image)} alt='pic' />
+                <span onClick={() => setForm({ ...form, image: null })}>✕</span>
+              </div>
+            )}
+          </div>
+        )}
         {message && (
           <Stack
             sx={{
@@ -84,7 +106,6 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, nickname: e.target.value })}
           maxLength={30}
         />
-
         <div className='input-container'>
           <input
             type={showPassword ? 'text' : 'password'}
@@ -105,7 +126,6 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, confirm: e.target.value })}
           maxLength={30}
         />
-
         <input
           type='text'
           className='input'
@@ -133,11 +153,11 @@ export default function RegisterForm() {
         <input
           type='text'
           className='input'
-          placeholder='Homepage   (optional)'
+          placeholder='Website   (optional)'
           value={form.homepage}
           onChange={(e) => setForm({ ...form, homepage: e.target.value })}
           maxLength={30}
-        />
+        />{' '}
         <button type='submit' className='next btn'>
           Sign up
         </button>
