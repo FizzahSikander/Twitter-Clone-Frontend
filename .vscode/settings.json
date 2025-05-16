@@ -1,19 +1,36 @@
 {
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/.DS_Store": false,
+    "**/Thumbs.db": false,
     "**/node_modules": false,
-    "Twitter-Clone-Frontend/vite.config.js": true,
-    "Twitter-Clone-Frontend/README.md": true,
-    "Twitter-Clone-Frontend/package-lock.json": true,
-    "Twitter-Clone-Frontend/eslint.config.js": true,
-    "Twitter-Clone-Frontend/.gitignore": true,
-    "Twitter-Clone-Frontend/index.html": true,
-    "Twitter-Clone-Frontend/node_modules": true,
-    ".vscode": true
+    "Twitter-Clone-Frontend/vite.config.js": false,
+    "Twitter-Clone-Frontend/README.md": false,
+    "Twitter-Clone-Frontend/package-lock.json": false,
+    "Twitter-Clone-Frontend/eslint.config.js": false,
+    "Twitter-Clone-Frontend/.gitignore": false,
+    "Twitter-Clone-Frontend/index.html": false,
+    "Twitter-Clone-Frontend/node_modules": false,
+    ".vscode": false,
+    ".git": false
   },
-  "explorerExclude.backup": {}
+  "explorerExclude.backup": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/.DS_Store": false,
+    "**/Thumbs.db": false,
+    "**/node_modules": false,
+    "Twitter-Clone-Frontend/vite.config.js": false,
+    "Twitter-Clone-Frontend/README.md": false,
+    "Twitter-Clone-Frontend/package-lock.json": false,
+    "Twitter-Clone-Frontend/eslint.config.js": false,
+    "Twitter-Clone-Frontend/.gitignore": false,
+    "Twitter-Clone-Frontend/index.html": false,
+    "Twitter-Clone-Frontend/node_modules": false,
+    ".vscode": true,
+    ".git": true
+  }
 }

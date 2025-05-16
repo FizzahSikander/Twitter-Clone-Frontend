@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { validateUser } from '../services/validate';
+import { Auth } from '../services/authentication.js';
 
 export const AuthRedirect = () => {
   const navigate = useNavigate();
@@ -8,9 +8,9 @@ export const AuthRedirect = () => {
   useEffect(() => {
     const check = async () => {
       try {
-        const res = await validateUser();
+        const res = await Auth();
         console.log(res);
-        if (res.ok) navigate('/home');
+        if (res.id) navigate('/home');
         else navigate('/login');
       } catch {
         navigate('/login');
