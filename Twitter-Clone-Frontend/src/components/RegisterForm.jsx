@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { registerUser } from '../services/register';
+import { registerUser } from '../services/userAccess';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
