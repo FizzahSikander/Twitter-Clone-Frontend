@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/userAccess';
+import { useUser } from '../utils/UserContext';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
@@ -21,17 +22,26 @@ export default function RegisterForm() {
     image: '',
   });
 
+  const { setUser } = useUser();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
 
     if (!form.name || !form.email || !form.nickname) return setError('Missing fields');
     if (form.password !== form.confirm) return setError('Passwords no match');
+
     setError('');
     setMessage('');
 
     const res = await registerUser(form);
-    res.message ? setMessage(res.message) : setError(res.error);
+
+    if (res.message) {
+      setUser(form);
+      navigate('/profile');
+    } else {
+      setError(res.error || 'Registration failed');
+    }
   };
 
   return (
@@ -49,7 +59,6 @@ export default function RegisterForm() {
             <label htmlFor='imageUpload' className='upload-pic'>
               {form.image ? 'Change Profile Picture:' : 'Upload Profile Picture'}
             </label>
-
             {form.image instanceof File && (
               <div className='preview'>
                 <img src={URL.createObjectURL(form.image)} alt='pic' />
@@ -59,27 +68,18 @@ export default function RegisterForm() {
           </div>
         )}
         {message && (
-          <Stack
-            sx={{
-              width: '100%',
-            }}
-            spacing={2}
-          >
+          <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='success' variant='filled' color='info'>
               {message}
             </Alert>
           </Stack>
         )}
         {error && (
-          <Stack
-            sx={{
-              width: '100%',
-            }}
-            spacing={2}
-          >
+          <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='error'>{error}</Alert>
           </Stack>
         )}
+
         <div className='input-container'>
           <input
             type='text'
@@ -91,6 +91,7 @@ export default function RegisterForm() {
           />
           <span className='char-count'>{form.name.length} / 30</span>
         </div>
+
         <input
           type='email'
           className='input'
@@ -98,6 +99,7 @@ export default function RegisterForm() {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
+
         <input
           type='text'
           className='input'
@@ -106,6 +108,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, nickname: e.target.value })}
           maxLength={30}
         />
+
         <div className='input-container'>
           <input
             type={showPassword ? 'text' : 'password'}
@@ -118,6 +121,7 @@ export default function RegisterForm() {
             👁
           </span>
         </div>
+
         <input
           type={showPassword ? 'text' : 'password'}
           className='input'
@@ -126,6 +130,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, confirm: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
@@ -134,6 +139,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, about: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
@@ -142,6 +148,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, occupation: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
@@ -150,6 +157,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, hometown: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
@@ -157,7 +165,8 @@ export default function RegisterForm() {
           value={form.homepage}
           onChange={(e) => setForm({ ...form, homepage: e.target.value })}
           maxLength={30}
-        />{' '}
+        />
+
         <button type='submit' className='next btn'>
           Sign up
         </button>

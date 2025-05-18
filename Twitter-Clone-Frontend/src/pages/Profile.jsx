@@ -1,7 +1,12 @@
 import React from 'react';
 import '../styles/profile.css';
+import { useUser } from '../utils/UserContext';
 
 export const Profile = () => {
+  const { user } = useUser();
+
+  if (!user) return <p>Loading profile...</p>;
+
   return (
     <div className='profile-container'>
       <div className='banner'>
@@ -15,7 +20,11 @@ export const Profile = () => {
       <div className='profile-content'>
         <div className='profile-pic-container'>
           <img
-            src='https://placehold.co/100x100?text=Profile'
+            src={
+              user.image instanceof File
+                ? URL.createObjectURL(user.image)
+                : user.image || 'https://placehold.co/100x100?text=Profile'
+            }
             alt='Profile'
             className='profile-pic'
           />
@@ -26,26 +35,23 @@ export const Profile = () => {
         </div>
 
         <div className='profile-info'>
-          <h2>Daniel Feldman</h2>
-          <p className='username'>@d_feldman</p>
-          <p className='bio'>Taking a short twitter vacation</p>
+          <h2>{user.name}</h2>
+          <p className='username'>@{user.nickname}</p>
+          <p className='bio'>{user.about || 'No bio yet.'}</p>
 
           <div className='details'>
-            <span>📡 Astronomer</span>
-            <span>📍 Minneapolish</span>
-            <span>📅 Joined November 2010</span>
-            <a href='https://youtu.be/wkKGR-FMqQQ?t=...' target='_blank' rel='noreferrer'>
-              🔗 Link
-            </a>
+            {user.occupation && <span>💼 {user.occupation}</span>}
+            {user.hometown && <span>📍 {user.hometown}</span>}
+            {user.homepage && (
+              <a href={user.homepage} target='_blank' rel='noreferrer'>
+                🔗 {user.homepage}
+              </a>
+            )}
           </div>
 
           <div className='follow-stats'>
-            <span>
-              <strong>10.2K</strong> Following
-            </span>
-            <span>
-              <strong>13.8K</strong> Followers
-            </span>
+            <span><strong>0</strong> Following</span>
+            <span><strong>0</strong> Followers</span>
           </div>
         </div>
       </div>

@@ -9,7 +9,6 @@ import { Auth } from './services/authentication';
 import { useUser } from './utils/UserContext';
 
 function App() {
-  // Current logged in user is accessible to all pages via context for easier access
   const { setUser } = useUser();
 
   const navigate = useNavigate();
