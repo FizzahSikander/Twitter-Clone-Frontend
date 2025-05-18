@@ -18,7 +18,8 @@ export default function LoginForm() {
     setError('');
     console.log(email, password);
     const res = await loginUser({ email, password });
-    res.error ? setError(res.error) : navigate('/home');
+    console.log(res);
+    res.error ? setError(res.error) : navigate(`/profile/${res.username}`);
   };
 
   return (
