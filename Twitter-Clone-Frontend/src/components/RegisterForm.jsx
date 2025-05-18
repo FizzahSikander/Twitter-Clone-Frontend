@@ -4,7 +4,6 @@ import { registerUser } from '../services/userAccess';
 import { useUser } from '../utils/UserContext';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { useUser } from '../utils/UserContext';
 
 export default function RegisterForm() {
   const navigate = useNavigate();
@@ -25,8 +24,6 @@ export default function RegisterForm() {
     image: null,
   });
 
-  const { setUser } = useUser();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
