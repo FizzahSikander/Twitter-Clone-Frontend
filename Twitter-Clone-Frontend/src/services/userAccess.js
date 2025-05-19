@@ -13,7 +13,7 @@ export const registerUser = async (params) => {
 
     const data = await response.json();
     if (data.error) return { error: data.error };
-    return { message: data.message, user: data.user }; // ✅ include backend user
+    return { message: data.message };
   } catch (err) {
     return { error: "Registration failed" };
   }
@@ -32,8 +32,8 @@ export const loginUser = async (params) => {
     const data = await response.json();
     console.log(data)
     if (data.error) {
-      console.error("Error registering user:", data.error);
-      return { error: data.error };
+      console.error("Error registering user:", data.error)
+      return { error: data.error }
     }
     return { message: data.message, username: data.user.nickname };
   } catch (err) {

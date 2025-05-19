@@ -1,16 +1,13 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { registerUser } from '../services/userAccess';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { useUser } from '../utils/UserContext';
 
 export default function RegisterForm() {
-  const navigate = useNavigate();
-  const { setUser } = useUser();
-
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -21,33 +18,25 @@ export default function RegisterForm() {
     occupation: '',
     hometown: '',
     homepage: '',
-    image: null,
+    image: '',
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(form);
 
-    // Frontend validation
-    if (!form.name || !form.email || !form.nickname) {
-      return setError('Please fill in all required fields.');
-    }
-    if (form.password !== form.confirm) {
-      return setError('Passwords do not match.');
-    }
-
+    if (!form.name || !form.email || !form.nickname) return setError('Missing fields');
+    if (form.password !== form.confirm) return setError('Passwords no match');
     setError('');
+    setMessage('');
 
     const res = await registerUser(form);
-    if (res.error) return setError(res.error);
-
-    setUser(res.user); // Save backend user in context
-    navigate(`/profile/${res.user.nickname}`); // Go to profile
+    res.message ? setMessage(res.message) : setError(res.error);
   };
 
   return (
     <>
       <form className='form' onSubmit={handleSubmit}>
-        {/* File Upload */}
         <input
           type='file'
           accept='image/*'
@@ -55,26 +44,42 @@ export default function RegisterForm() {
           hidden
           onChange={(e) => setForm({ ...form, image: e.target.files[0] })}
         />
-        <div className='img-container'>
-          <label htmlFor='imageUpload' className='upload-pic'>
-            {form.image ? 'Change Profile Picture' : 'Upload Profile Picture'}
-          </label>
-          {form.image && (
-            <div className='preview'>
-              <img src={URL.createObjectURL(form.image)} alt='preview' />
-              <span onClick={() => setForm({ ...form, image: null })}>✕</span>
-            </div>
-          )}
-        </div>
+        {!message && (
+          <div className='img-container'>
+            <label htmlFor='imageUpload' className='upload-pic'>
+              {form.image ? 'Change Profile Picture:' : 'Upload Profile Picture'}
+            </label>
 
-        {/* Error Alert */}
+            {form.image instanceof File && (
+              <div className='preview'>
+                <img src={URL.createObjectURL(form.image)} alt='pic' />
+                <span onClick={() => setForm({ ...form, image: null })}>✕</span>
+              </div>
+            )}
+          </div>
+        )}
+        {message && (
+          <Stack
+            sx={{
+              width: '100%',
+            }}
+            spacing={2}
+          >
+            <Alert severity='success' variant='filled' color='info'>
+              {message}
+            </Alert>
+          </Stack>
+        )}
         {error && (
-          <Stack sx={{ width: '100%' }} spacing={2}>
+          <Stack
+            sx={{
+              width: '100%',
+            }}
+            spacing={2}
+          >
             <Alert severity='error'>{error}</Alert>
           </Stack>
         )}
-
-        {/* Name Field */}
         <div className='input-container'>
           <input
             type='text'
@@ -86,7 +91,6 @@ export default function RegisterForm() {
           />
           <span className='char-count'>{form.name.length} / 30</span>
         </div>
-
         <input
           type='email'
           className='input'
@@ -94,7 +98,6 @@ export default function RegisterForm() {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
-
         <input
           type='text'
           className='input'
@@ -103,8 +106,6 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, nickname: e.target.value })}
           maxLength={30}
         />
-
-        {/* Password Fields */}
         <div className='input-container'>
           <input
             type={showPassword ? 'text' : 'password'}
@@ -113,22 +114,22 @@ export default function RegisterForm() {
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
-          <span className='toggle' onClick={() => setShowPassword(!showPassword)}>👁</span>
+          <span className='toggle' onClick={() => setShowPassword(!showPassword)}>
+            👁
+          </span>
         </div>
-
         <input
           type={showPassword ? 'text' : 'password'}
           className='input'
-          placeholder='Confirm Password'
+          placeholder='Confirm password'
           value={form.confirm}
           onChange={(e) => setForm({ ...form, confirm: e.target.value })}
+          maxLength={30}
         />
-
-        {/* Optional Fields */}
         <input
           type='text'
           className='input'
-          placeholder='About (optional)'
+          placeholder='About   (optional)'
           value={form.about}
           onChange={(e) => setForm({ ...form, about: e.target.value })}
           maxLength={30}
@@ -136,7 +137,7 @@ export default function RegisterForm() {
         <input
           type='text'
           className='input'
-          placeholder='Occupation (optional)'
+          placeholder='Occupation   (optional)'
           value={form.occupation}
           onChange={(e) => setForm({ ...form, occupation: e.target.value })}
           maxLength={30}
@@ -144,7 +145,7 @@ export default function RegisterForm() {
         <input
           type='text'
           className='input'
-          placeholder='Hometown (optional)'
+          placeholder='Hometown   (optional)'
           value={form.hometown}
           onChange={(e) => setForm({ ...form, hometown: e.target.value })}
           maxLength={30}
@@ -152,13 +153,14 @@ export default function RegisterForm() {
         <input
           type='text'
           className='input'
-          placeholder='Website (optional)'
+          placeholder='Website   (optional)'
           value={form.homepage}
           onChange={(e) => setForm({ ...form, homepage: e.target.value })}
           maxLength={30}
-        />
-
-        <button type='submit' className='next btn'>Sign up</button>
+        />{' '}
+        <button type='submit' className='next btn'>
+          Sign up
+        </button>
       </form>
 
       <p className='signup'>
