@@ -11,59 +11,20 @@ export function Footer() {
 
   return (
     <>
-      <footer
-        style={{
-          bottom: 0,
-          width: '100%',
-
-          padding: '15px',
-          boxShadow: '0 -1px 6px rgba(0,0,0,0.03)',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            maxWidth: 300,
-            margin: '0 auto',
-          }}
-        >
+      <footer>
+        <div className='footer-container'>
           <img
             src={user.image}
             alt='avatar'
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              cursor: 'pointer',
-              marginRight: 12,
-            }}
             onClick={() => navigate(`/profile/${user.nickname}`)}
           />
           <div style={{ flex: 1 }}>
-            <div
-              style={{
-                fontWeight: 700,
-                fontSize: 16,
-                lineHeight: 1.1,
-              }}
-            >
-              {user.name}
-            </div>
+            <div className='footer-name'>{user.name}</div>
             <div className='footer-handle' onClick={() => navigate(`/profile/${user.nickname}`)}>
               @{user.nickname}
             </div>
           </div>
-          <span
-            style={{
-              fontSize: 28,
-              cursor: 'pointer',
-              fontWeight: 700,
-              userSelect: 'none',
-              letterSpacing: 6,
-              transform: 'translateY(-10px)',
-            }}
-            onClick={() => setShowPopup(true)}
-          >
+          <span className='footer-options' onClick={() => setShowPopup(true)}>
             ...
           </span>
         </div>
