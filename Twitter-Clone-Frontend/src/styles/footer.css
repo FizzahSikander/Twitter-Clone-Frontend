@@ -1,0 +1,10 @@
+.footer-handle {
+  color: #536471;
+  font-size: 15px;
+  margin-top: 2px;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.footer-handle:hover {
+  color: #1da1f2; /* Twitter blue or any light blue */
+}
