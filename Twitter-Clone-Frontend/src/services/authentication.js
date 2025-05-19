@@ -7,7 +7,6 @@ export const Auth = async () => {
     const data = await response.json();
 
     if (data.error) {
-      console.error("user is not valid:", data.error);
       return { error: data.error };
     }
     return data.user

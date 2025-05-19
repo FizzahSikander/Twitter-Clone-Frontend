@@ -7,12 +7,8 @@ import '../styles/footer.css';
 export function Footer() {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
+  const { user, setUser } = useUser();
 
-  const { user } = useUser();
-
-  console.log(user);
-
-  if (!user) return null;
   return (
     <>
       <footer
@@ -115,6 +111,8 @@ export function Footer() {
                 onClick={async () => {
                   await logoutUser();
                   navigate('/login');
+                  setShowPopup(false);
+                  setUser(null);
                 }}
               >
                 Log out

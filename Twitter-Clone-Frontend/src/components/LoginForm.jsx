@@ -2,25 +2,42 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../services/userAccess';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../utils/UserContext';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!showPassword && email) return setShowPassword(true);
     if (!password) return setError('Password cannot be empty!');
     setError('');
+    setLoading(true);
+
     console.log(email, password);
     const res = await loginUser({ email, password });
-    console.log(res);
-    res.error ? setError(res.error) : navigate(`/home`);
+    if (res.error) {
+      setError(res.error);
+      setLoading(false);
+      return;
+    }
+
+    setTimeout(async () => {
+      setUser(res.user);
+      setLoading(false);
+
+      navigate('/home');
+    }, 1000);
   };
+
+  if (loading) return <div className='spinner' />;
 
   return (
     <>
@@ -53,7 +70,6 @@ export default function LoginForm() {
           Forgot password?
         </button>
       </form>
-
       <p className='signup'>
         Don’t have an account? <Link to='/register'>Sign up</Link>
       </p>

@@ -35,7 +35,7 @@ export const loginUser = async (params) => {
       console.error("Error registering user:", data.error)
       return { error: data.error }
     }
-    return { message: data.message, username: data.user.nickname };
+    return { message: data.message, user: data.user };
   } catch (err) {
     return err;
   }
