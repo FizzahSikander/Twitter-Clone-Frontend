@@ -19,7 +19,7 @@ export default function LoginForm() {
     console.log(email, password);
     const res = await loginUser({ email, password });
     console.log(res);
-    res.error ? setError(res.error) : navigate(`/profile/${res.username}`);
+    res.error ? setError(res.error) : navigate(`/home`);
   };
 
   return (
