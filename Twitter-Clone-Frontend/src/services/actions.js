@@ -31,7 +31,7 @@ export const loadProfile = async (username) => {
             return data.error;
         }
 
-        return data.user
+        return { user: data.user, tweets: data.tweetsByUser }
     } catch (err) {
         return err
     }
