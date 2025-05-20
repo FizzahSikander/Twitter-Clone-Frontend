@@ -16,6 +16,7 @@
 
 .home-container .contents {
   flex: 2;
+  position: relative;
 }
 .home-container .side-bar {
   flex: 1;
@@ -56,6 +57,16 @@
 }
 .commentIcon {
   cursor: pointer;
+}
+.display-message {
+  padding: 10px 20px;
+  position: absolute;
+  left: 50%;
+  /* top: 100px; */
+  /* text-align: center; */
+  top: 30px;
+  color: #1d9bf0;
+  border: 1px solid #1d9bf0;
 }
 
 /* common */

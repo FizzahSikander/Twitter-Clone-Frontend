@@ -9,7 +9,7 @@ export const Auth = async () => {
     if (data.error) {
       return { error: data.error };
     }
-    return data.user
+    return data.user;
   } catch (err) {
     return err;
   }
