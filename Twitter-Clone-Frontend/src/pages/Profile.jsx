@@ -6,7 +6,7 @@ import { followUser, loadProfile } from '../services/actions';
 
 export const Profile = () => {
   const { username } = useParams();
-  const { user } = useUser();
+  const { user, setUser } = useUser(); // assumes setUser exists in context
 
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,6 @@ export const Profile = () => {
     fetchProfile();
   }, [username]);
 
-  // loading
   if (loading) return <div>Loading profile...</div>;
   if (!profile || !user) return <div>User not found</div>;
 
@@ -37,10 +36,28 @@ export const Profile = () => {
 
   const handleFollow = async () => {
     const mode = isFollowing ? 'unfollow' : 'follow';
+
     await followUser(profile._id, mode);
-    const { user } = await loadProfile(username);
-    setProfile(user);
+
+    // Reload target profile
+    const updatedProfile = await loadProfile(username);
+    setProfile(updatedProfile.user);
+
+    // Update logged-in user's "following" list
+    setUser((prev) => {
+      if (!prev) return prev;
+
+      const alreadyFollowing = prev.following.includes(profile._id);
+
+      return {
+        ...prev,
+        following: alreadyFollowing
+          ? prev.following.filter((id) => id !== profile._id)
+          : [...prev.following, profile._id],
+      };
+    });
   };
+
 
   return (
     <>
@@ -60,7 +77,9 @@ export const Profile = () => {
           <div className='profile-info'>
             {!ownProfile && (
               <div className='follow-button'>
-                <button onClick={handleFollow}>{isFollowing ? 'Unfollow' : 'Follow'} </button>
+                <button onClick={handleFollow}>
+                  {isFollowing ? 'Unfollow' : 'Follow'}
+                </button>
               </div>
             )}
             <h2>{profile.name || 'Name not provided'}</h2>
