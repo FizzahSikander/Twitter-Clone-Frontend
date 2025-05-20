@@ -7,9 +7,11 @@ import { AuthRedirect } from './utils/AuthRedirect';
 import Home from './pages/Home';
 import { Auth } from './services/authentication';
 import { useUser } from './utils/UserContext';
+import { Footer } from './components/Footer';
 
 function App() {
-  const { setUser } = useUser();
+  // Current logged in user is accessible to all pages via context for easier access
+  const { user, setUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -35,6 +37,8 @@ function App() {
         <Route path='/profile/:username' element={<Profile />} />
         <Route path='/home' element={<Home />} />
       </Routes>
+
+      {user && <Footer />}
     </>
   );
 }
