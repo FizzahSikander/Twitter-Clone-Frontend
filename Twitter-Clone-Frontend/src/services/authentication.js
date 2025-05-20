@@ -10,8 +10,7 @@ export const Auth = async () => {
       console.error("user is not valid:", data.error);
       return { error: data.error };
     }
-    //setUserId(data.user.id);
-    return data.user.id;
+    return data.user;
   } catch (err) {
     return err;
   }

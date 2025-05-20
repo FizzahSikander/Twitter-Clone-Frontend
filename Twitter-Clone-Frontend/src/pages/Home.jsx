@@ -1,35 +1,35 @@
 import { useEffect, useState } from "react";
 import "../components/homePage/home.css";
-import Tweet from "../components/homePage/Tweet";
+import TweetForm from "../components/homePage/TweetForm";
 import TweetCard from "../components/homePage/TweetCard";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "../services/authentication";
 
 function Home() {
   const [userId, setUserId] = useState();
+  const [followings, setFollowings] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const validateUser = async () => {
-      const getUserId = await Auth();
+      const getUser = await Auth();
+      const getUserId = getUser.id;
       if (!getUserId || getUserId.error) {
         navigate("/login");
         return;
       }
       setUserId(getUserId);
+      setFollowings(getUser.following);
     };
     validateUser();
   }, []);
 
   return (
     <div className="home-container">
-      {/*userId*/}
       <div className="contents pe-20">
-        <Tweet />
-        <TweetCard />
-        <TweetCard />
-        <TweetCard />
-        <TweetCard />
-        <TweetCard />
+        <TweetForm userId={userId} />
+        {followings.map((followingId) => (
+          <TweetCard key={followingId} followingId={followingId} />
+        ))}
       </div>
       <div className="side-bar">Sidebar</div>
     </div>
