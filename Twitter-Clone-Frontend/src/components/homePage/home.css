@@ -1,7 +1,7 @@
 .home-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 80px;
   font-family: sans-serif;
   background: #fff;
   min-height: 100vh;
@@ -11,6 +11,7 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  gap: 50px;
   font-synthesis: none;
 }
 
@@ -94,4 +95,24 @@
 }
 .text-center {
   text-align: center;
+}
+
+.tweet-search {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.tweet-content {
+  border-bottom: 1px solid rgb(207, 207, 207);
+  padding-left: 10px;
+}
+
+.search-tweets {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.search-user {
+  margin: inherit !important;
 }

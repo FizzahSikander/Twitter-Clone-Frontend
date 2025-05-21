@@ -8,9 +8,10 @@ import Home from './pages/Home';
 import { Auth } from './services/authentication';
 import { useUser } from './utils/UserContext';
 import { Footer } from './components/Footer';
+import { SideBar } from './components/SideBar';
+import { SearchResults } from './components/SearchResults';
 
 function App() {
-  // Current logged in user is accessible to all pages via context for easier access
   const { user, setUser } = useUser();
 
   const navigate = useNavigate();
@@ -29,15 +30,17 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path='/' element={<AuthRedirect />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-
-        <Route path='/profile/:username' element={<Profile />} />
-        <Route path='/home' element={<Home />} />
-      </Routes>
-
+      {user && <SideBar />}
+      <div className='wrapper'>
+        <Routes>
+          <Route path='/' element={<AuthRedirect />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/profile/:username' element={<Profile />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/search' element={<SearchResults />} />
+        </Routes>
+      </div>
       {user && <Footer />}
     </>
   );

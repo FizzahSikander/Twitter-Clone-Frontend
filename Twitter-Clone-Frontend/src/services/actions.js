@@ -17,10 +17,6 @@ export const followUser = async (target, mode) => {
     }
 };
 
-
-
-
-
 export const loadProfile = async (username) => {
     try {
         const res = await fetch(`http://localhost:3000/profile/${username}`);
@@ -31,8 +27,18 @@ export const loadProfile = async (username) => {
             return data.error;
         }
 
-        return { user: data.user, tweets: data.tweetsByUser }
+        return { user: data.user, tweets: data.tweetsByUser };
     } catch (err) {
-        return err
+        return err;
+    }
+};
+
+export const getTags = async () => {
+    try {
+        const res = await fetch('http://localhost:3000/tags');
+        const data = await res.json();
+        return data?.trending;
+    } catch (err) {
+        return err;
     }
 };
