@@ -1,11 +1,27 @@
-.profile-container {
+.content {
   font-family: Arial, sans-serif;
-  width: 600px;
-  margin: 0 auto;
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
   background-color: white;
+}
+
+.profile-container {
+  margin: auto;
+  min-height: 100vh;
+  max-width: 800px;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tweet-list-scroll {
+  border-radius: 10px;
+  background: #fff;
 }
 
 .banner-img {
@@ -75,4 +91,58 @@
 
 .follow-stats span {
   margin-right: 20px;
+}
+
+.tweet-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.tweet-card {
+  border-bottom: 1px solid #ddd;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.tweet-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.tweet-user-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.tweet-name {
+  font-weight: bold;
+  color: #000;
+}
+
+.tweet-nick {
+  color: gray;
+  font-size: 13px;
+}
+
+.tweet-options {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 20px;
+  color: gray;
+  cursor: pointer;
+}
+
+.comment-icon {
+  font-size: 16px;
+}
+
+.profile-link {
+  color: inherit;
+  text-decoration: none;
 }
