@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { registerUser } from '../services/userAccess';
+import { useUser } from '../utils/UserContext';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
@@ -20,6 +21,7 @@ export default function RegisterForm() {
     homepage: '',
     image: '',
   });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -134,6 +136,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, about: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
@@ -142,6 +145,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, occupation: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
@@ -150,6 +154,7 @@ export default function RegisterForm() {
           onChange={(e) => setForm({ ...form, hometown: e.target.value })}
           maxLength={30}
         />
+
         <input
           type='text'
           className='input'
