@@ -1,7 +1,6 @@
 import { createTweet, addComment, getTimeAgo } from '../services/tweet';
 
-// For tests for addComment, ensure __BASE_URL__ is defined globally:
-global.__BASE_URL__ = "http://localhost:3000";
+global.__BASE_URL__ = 'http://localhost:3000';
 
 describe('createTweet', () => {
   beforeEach(() => {
@@ -21,7 +20,7 @@ describe('createTweet', () => {
 
     const params = { content: 'Hello world' };
     const response = await createTweet(params);
-    
+
     expect(response).toEqual({ message: successMessage });
     expect(global.fetch).toHaveBeenCalledWith('http://localhost:3000/tweet', {
       method: 'POST',
