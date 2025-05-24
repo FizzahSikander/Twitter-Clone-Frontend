@@ -12,6 +12,10 @@ vi.mock('../services/userAccess.js', () => ({
   loginUser: vi.fn(),
 }));
 
+vi.mock('../utils/UserContext', () => ({
+  useUser: () => ({ setUser: vi.fn() }),
+}));
+
 describe('LoginForm', () => {
   it('shows email input and Next button on first render', () => {
     renderUi(<LoginForm />);
