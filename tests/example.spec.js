@@ -1,23 +1,40 @@
 // @ts-check
 import { test, expect } from "@playwright/test";
+import { faker } from "@faker-js/faker";
 
-test.describe("login", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:5173/");
+test("User registration, login and check user login", async ({ page }) => {
+  // step 1. user registration
+  await page.goto("http://localhost:5173/");
+  await page.click("text=Sign up");
+
+  const randomName = faker.internet.username();
+  const randomEmail = faker.internet.email();
+
+  await page.fill('input[name="name"]', randomName);
+  await page.fill('input[name="email"]', randomEmail);
+  await page.fill('input[name="nickname"]', randomName);
+  await page.fill('input[name="password"]', "test123456");
+  await page.fill('input[name="confirm_password"]', "test123456");
+  await page.fill('input[name="about"]', "Test about");
+  await page.fill('input[name="occupation"]', "Test occupation ");
+  await page.fill('input[name="home_town"]', "Gothenburg");
+  await page.fill('input[name="website"]', "https://x.com/");
+
+  await page.click('button[type="submit"]');
+
+  await expect(page.locator(".MuiAlert-message")).toHaveText("User created", {
+    timeout: 5000,
   });
 
-  test("Should have title", async ({ page }) => {
-    await expect(page).toHaveTitle("Vite + React");
-    await expect(
-      page.getByRole("heading", {
-        name: "Sign in to Twitter",
-      })
-    ).toBeVisible();
-  });
+  // step 2. User login
+  await page.goto("http://localhost:5173/login");
+  await page.fill('input[name="login_user"]', randomEmail);
+  await page.click('button[type="submit"]'); // Submit email (step 1)
+  await page.fill('input[name="password"]', "test123456");
+  await page.click('button[type="submit"]'); // Submit password (step 2)
 
-  test("Submit login info", async ({ page }) => {
-    await expect(
-      page.getByPlaceholder("Phone, email address or username")
-    ).toBeVisible();
-  });
+  // step 3 Check login
+  await expect(page).toHaveURL(/home/); // Adjust as per your actual redirect URL
+  await page.click("text=Profile");
+  await expect(page.locator(".profile-info h2")).toHaveText(randomName);
 });
