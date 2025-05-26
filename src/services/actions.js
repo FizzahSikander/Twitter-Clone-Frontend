@@ -42,3 +42,31 @@ export const getTags = async () => {
         return err;
     }
 };
+
+
+export const editProfile = async ({ banner, image }) => {
+
+    const formData = new FormData();
+    if (banner) formData.append('banner', banner);
+    if (image) formData.append('image', image);
+
+
+
+    try {
+        const res = await fetch(`http://localhost:3000/edit-profile`, {
+            method: 'PATCH',
+            credentials: 'include',
+            body: formData
+        });
+
+        const data = await res.json();
+        console.log(data)
+        if (data.error) {
+            console.error(data.error);
+            return data.error;
+        }
+        return data.message;
+    } catch (err) {
+        return err;
+    }
+};
