@@ -34,7 +34,11 @@ test("User registration, login and check user login", async ({ page }) => {
   await page.click('button[type="submit"]'); // Submit password (step 2)
 
   // step 3 Check login
-  await expect(page).toHaveURL(/home/); // Adjust as per your actual redirect URL
+  await page.waitForURL(/\/home/); // allow 10s for slow responses
+  await expect(page.getByText("Profile")).toBeVisible({ timeout: 5000 });
   await page.click("text=Profile");
-  await expect(page.locator(".profile-info h2")).toHaveText(randomName);
+  //await page.goto(`http://localhost:5173/profile/${randomName}`);
+  await expect(page.locator(".profile-info h2")).toHaveText(randomName, {
+    timeout: 5000,
+  });
 });
