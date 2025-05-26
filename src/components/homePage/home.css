@@ -13,6 +13,7 @@
   border-left: 1px solid #cfd9de;
   border-right: 1px solid #cfd9de;
   border-bottom: 1px solid #cfd9de;
+  width: 100%;
 }
 
 .home-container .contents {
