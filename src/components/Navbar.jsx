@@ -16,14 +16,20 @@ export default function Navbar() {
         <div className="navbar-links">
           <Link
             to="/home"
-            className={location.pathname === "/home" ? "active-page" : ""}
+            className={
+              location.pathname === "/home"
+                ? "home-link active-page"
+                : "home-link"
+            }
           >
             Home
           </Link>
           <Link
             to={`/profile/${user.nickname}`}
             className={
-              location.pathname.startsWith("/profile/") ? "active-page" : ""
+              location.pathname.startsWith("/profile/")
+                ? "profile-link active-page"
+                : "profile-link"
             }
           >
             Profile
