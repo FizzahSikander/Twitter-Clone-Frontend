@@ -1,7 +1,6 @@
 .navbar {
   background: #ffffff;
-  padding: 20px 50px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid #cfd9de;
   min-width: -webkit-fill-available;
 }
 
@@ -29,5 +28,23 @@
 }
 
 .navbar-links a:hover {
-  color: #1d9bf0;
+  background: #cfd9de;
+}
+
+/* new design */
+.navbar-logo {
+  flex: 1;
+  text-align: center;
+}
+.navbar-links {
+  flex: 2;
+  display: flex;
+  line-height: 60px;
+  text-align: center;
+}
+.navbar-links a {
+  flex: 1;
+}
+.navbar-links .active-page {
+  border-bottom: 5px solid #1d9bf0;
 }
