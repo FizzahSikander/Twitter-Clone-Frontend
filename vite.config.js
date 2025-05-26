@@ -8,8 +8,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/tests/setupTests.js",
-    exclude: ["./tests/**", "./tests-examples/**", "!src/tests/**"]
-
+    exclude: ["node_modules", "tests", "tests-examples"]
   },
   define: {
     __BASE_URL__: JSON.stringify("http://localhost:3000"),
