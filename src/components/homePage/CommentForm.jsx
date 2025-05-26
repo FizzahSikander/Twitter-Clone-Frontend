@@ -1,42 +1,33 @@
-import { useEffect, useState } from "react";
-import { Auth } from "../../services/authentication";
-import { addComment } from "../../services/tweet";
+import { useEffect, useState } from 'react';
+import { Auth } from '../../services/authentication';
+import { addComment } from '../../services/tweet';
+import { useUser } from '../../utils/UserContext';
 
 function CommentForm({ tweetId, refreshContents }) {
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [userId, setUserId] = useState();
 
+  const { user } = useUser();
+
+  if (!user) return null;
+
   const [form, setForm] = useState({
-    text: "",
-    authorId: "",
+    text: '',
+    authorId: '',
   });
 
   const handleText = (val) => {
-    setForm({ ...form, text: val, authorId: userId, tweetId: tweetId });
+    setForm({ ...form, text: val, tweetId: tweetId });
   };
-
-  useEffect(() => {
-    const validateUser = async () => {
-      const getUser = await Auth();
-      const getUserId = getUser.id;
-      if (!getUserId || getUserId.error) {
-        navigate("/login");
-        return;
-      }
-      setUserId(getUserId);
-    };
-    validateUser();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.text) return setError("Missing fields");
-    setError("");
-    setMessage("");
-    if (!userId) return setError("User is not valid");
+    if (!form.text) return setError('Missing fields');
+    setError('');
+    setMessage('');
     const res = await addComment(form);
-    form.text = "";
+    form.text = '';
     if (res.message) {
       setMessage(res.message);
       refreshContents();
@@ -47,20 +38,16 @@ function CommentForm({ tweetId, refreshContents }) {
 
   return (
     <div>
-      <form className="d-flex flex-direction-column" onSubmit={handleSubmit}>
+      <form className='d-flex flex-direction-column' onSubmit={handleSubmit}>
         <textarea
-          rows="7"
-          cols="50"
-          className="tweet-text"
-          placeholder="Write your thought ..."
+          rows='7'
+          cols='50'
+          className='tweet-text'
+          placeholder='Write your thought ...'
           value={form.text}
           onChange={(e) => handleText(e.target.value)}
         />
-        <input
-          type="submit"
-          value="Save"
-          className="save-tweet align-self-end"
-        />
+        <input type='submit' value='Save' className='save-tweet align-self-end' />
       </form>
     </div>
   );

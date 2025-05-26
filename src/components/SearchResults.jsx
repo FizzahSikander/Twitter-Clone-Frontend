@@ -34,7 +34,6 @@ export function SearchResults() {
     run();
   }, [query]);
 
-  console.log(user);
   return (
     <>
       <div className='home-container search-tweets'>
@@ -91,27 +90,3 @@ export function SearchResults() {
     </>
   );
 }
-
-/* {
-  <div className='home-container'>
-    <div className='tweet d-flex'>
-      <div className='user-image text-center'>
-        <img src={tweet.createdBy.image} alt='User Image' className='round-image' />
-      </div>
-
-      <div className='tweet-form'>
-        <div className='d-flex flex-direction-column'>
-          <div className='tweet-heading'>
-            {tweet.createdBy.name}
-            <UserInfo id={tweet.createdBy} createdAt={tweet.createdAt} />
-          </div>
-          <div className='tweet-content'>{tweet && <p>{tweet.text}</p>}</div>
-          <div className='tweet-comment d-flex flex-direction-column  '>
-            <div className='commentIcon pe-10 p-10' onClick={(e) => handleCommentButton(e)}></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>;
-}
- */

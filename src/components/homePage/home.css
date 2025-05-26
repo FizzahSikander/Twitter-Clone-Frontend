@@ -118,3 +118,8 @@
 .search-user {
   margin: inherit !important;
 }
+
+.user-link {
+  text-decoration: none;
+  color: inherit;
+}
