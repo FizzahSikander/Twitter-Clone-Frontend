@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import { createTweet } from '../../services/tweet';
 
-function TweetForm({ userId }) {
+function TweetForm() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
   const [form, setForm] = useState({
     text: '',
     tags: '',
-    comments: [],
-    createdBy: '',
   });
 
   // get tags
@@ -29,18 +27,10 @@ function TweetForm({ userId }) {
     if (!form.text) return setError('Missing fields');
     setError('');
     setMessage('');
-    if (!userId) return setError('User is not valid');
     const res = await createTweet(form);
     form.text = '';
     res.message ? setMessage(res.message) : setError(res.error);
   };
-
-  // One for syncing userId to form
-  useEffect(() => {
-    if (userId) {
-      setForm((prev) => ({ ...prev, createdBy: userId }));
-    }
-  }, [userId]);
 
   useEffect(() => {
     if (message) {
