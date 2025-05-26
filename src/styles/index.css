@@ -33,20 +33,22 @@ html {
 }
 
 .search-input {
-  background-color: #eff3f4;
-  border: none;
+  /*background-color: #eff3f4;*/
+  border: 1px solid #cfd9de;
   border-radius: 9999px;
-  padding: 12px 20px;
+  padding: 6px 20px;
   width: calc(100% - 32px);
   font-size: 15px;
   outline: none;
   color: #0f1419;
+  height: 40px;
 }
 
 .trends-card {
-  background-color: #f7f9f9;
   border-radius: 16px;
   padding: 16px;
+  margin-top: 55px;
+  border: 1px solid #cfd9de;
 }
 
 .trends-header {
@@ -93,4 +95,22 @@ html {
   color: #536471;
   padding-left: 12px;
   line-height: 1;
+}
+
+/* New design */
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
+  column-gap: 30px;
+}
+
+.trends-wrapper {
+  flex: 1;
+}
+.wrapper {
+  flex: 2;
 }

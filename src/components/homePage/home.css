@@ -5,19 +5,20 @@
   font-family: sans-serif;
   background: #fff;
   min-height: 100vh;
-  width: 1200px;
-  max-width: 100%;
-  margin: 0 auto;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   gap: 50px;
   font-synthesis: none;
+  border-left: 1px solid #cfd9de;
+  border-right: 1px solid #cfd9de;
+  border-bottom: 1px solid #cfd9de;
 }
 
 .home-container .contents {
   flex: 2;
   position: relative;
+  margin: 0 15px;
 }
 .home-container .side-bar {
   flex: 1;
