@@ -4,6 +4,7 @@ import Comments from "./Comments";
 import { getFetchHandler } from "../../utils/FetchHandler";
 import UserInfo from "./UserInfo";
 import UserImg from "./UserImg";
+import { Link } from "react-router-dom";
 
 function TweetCard({ followingId }) {
   const [showComments, setShowComments] = useState(false);

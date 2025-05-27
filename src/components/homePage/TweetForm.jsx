@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react';
-import { createTweet } from '../../services/tweet';
+import { useState, useEffect } from "react";
+import { createTweet } from "../../services/tweet";
+import UserImg from "./UserImg";
 
-function TweetForm() {
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+function TweetForm({ userId }) {
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const [form, setForm] = useState({
-    text: '',
-    tags: '',
+    text: "",
+    tags: "",
+    comments: [],
+    createdBy: "",
   });
 
   // get tags
@@ -24,18 +27,19 @@ function TweetForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.text) return setError('Missing fields');
-    setError('');
-    setMessage('');
+    if (!form.text) return setError("Missing fields");
+    setError("");
+    setMessage("");
+    if (!userId) return setError("User is not valid");
     const res = await createTweet(form);
-    form.text = '';
+    form.text = "";
     res.message ? setMessage(res.message) : setError(res.error);
   };
 
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
-        setMessage('');
+        setMessage("");
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -43,26 +47,29 @@ function TweetForm() {
 
   return (
     <>
-      {message && <div className='display-message'> {message} </div>}
-      <div className='tweet d-flex'>
-        <div className='user-image text-center'>
-          <img
-            src='https://toihid.com/wp-content/uploads/2025/05/avatar.jpg'
-            alt='User Image'
-            className='round-image'
-          />
+      {message && <div className="display-message"> {message} </div>}
+      <div className="tweet d-flex">
+        <div className="user-image text-center">
+          <UserImg id={userId} />
         </div>
-        <div className='tweet-form'>
-          <form className='d-flex flex-direction-column' onSubmit={handleSubmit}>
+        <div className="tweet-form">
+          <form
+            className="d-flex flex-direction-column"
+            onSubmit={handleSubmit}
+          >
             <textarea
-              rows='7'
-              cols='50'
-              className='tweet-text'
+              rows="7"
+              cols="50"
+              className="tweet-text"
               placeholder="What's happening..."
               value={form.text}
               onChange={(e) => handleText(e.target.value)}
             />
-            <input type='submit' value='Tweet' className='save-tweet align-self-end' />
+            <input
+              type="submit"
+              value="Tweet"
+              className="save-tweet align-self-end"
+            />
           </form>
         </div>
       </div>
