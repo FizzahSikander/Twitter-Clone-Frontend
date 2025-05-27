@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getFetchHandler } from "../../utils/FetchHandler";
 import CommentForm from "./CommentForm";
 import UserInfo from "./UserInfo";
+import UserImg from "./UserImg";
 
 function Comments({ tweetId, refreshTweet }) {
   const [comments, setComments] = useState([]);
@@ -31,11 +32,7 @@ function Comments({ tweetId, refreshTweet }) {
           return (
             <div key={comment._id} className="tweet d-flex comment my-10">
               <div className="user-image text-center">
-                <img
-                  src="https://toihid.com/wp-content/uploads/2025/05/avatar.jpg"
-                  alt="User Image"
-                  className="round-image-sm"
-                />
+                <UserImg id={comment.createdBy._id} />
               </div>
               <div className="tweet-form">
                 <div className="d-flex flex-direction-column">
